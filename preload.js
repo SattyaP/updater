@@ -35,11 +35,11 @@ let updateProgress = 0;
 
 ipcRenderer.send('app_version');
 ipcRenderer.on('app_version', (event, arg) => {
-    ipcRenderer.removeAllListeners('app_version');
     version.innerText = 'Version ' + arg.version;
 });
 
 ipcRenderer.on("checking-for-update", () => {
+    ipcRenderer.removeAllListeners('checking-for-update');
     document.getElementById("check-update").classList.remove("hidden")
 })
 
