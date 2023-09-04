@@ -38,10 +38,6 @@ function createWindow() {
     mainWindow.webContents.send('update_progress', progress.percent);
   });
 
-  autoUpdater.on("checking-for-update", () => {
-    mainWindow.webContents.send('checking-for-update');
-  })
-
   autoUpdater.checkForUpdatesAndNotify();
   autoUpdater.on('update-available', () => {
     updateCheckInProgress = false;

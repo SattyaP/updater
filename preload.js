@@ -38,11 +38,6 @@ ipcRenderer.on('app_version', (event, arg) => {
     version.innerText = 'Version ' + arg.version;
 });
 
-ipcRenderer.on("checking-for-update", () => {
-    ipcRenderer.removeAllListeners('checking-for-update');
-    document.getElementById("check-update").classList.remove("hidden")
-})
-
 ipcRenderer.on('update_available', () => {
     ipcRenderer.removeAllListeners('update_available');
     document.getElementById("check-update").classList.add("hidden")
