@@ -5,9 +5,10 @@ const spoof = path.join(process.cwd(), "extension/spoof/");
 
 let browser;
 let page;
-let stopFlag;
+let stopFlag = false;
 
 const runaAway = async (logToTextarea, headless) => {
+    stopFlag = false
     const options = {
         // executablePath: path.join(process.cwd(), "chrome/chrome.exe"),
         ignoreHTTPSErrors: true,
