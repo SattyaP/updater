@@ -13,6 +13,7 @@ const {
 } = require('./bot');
 
 let mainWindow;
+let updateCheckInProgress = false;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -32,13 +33,14 @@ function createWindow() {
   });
   // Menu.setApplicationMenu(null)
   mainWindow.loadFile('ui.html');
-
+  
   autoUpdater.on('download-progress', (progress) => {
     mainWindow.webContents.send('update_progress', progress.percent);
   });
 
   autoUpdater.checkForUpdatesAndNotify();
   autoUpdater.on('update-available', () => {
+    updateCheckInProgress = false;
     mainWindow.webContents.send('update_available');
   });
 
@@ -59,13 +61,6 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
-});
-
-autoUpdater.on('update-available', () => {
-  mainWindow.webContents.send('update_available');
-});
-autoUpdater.on('update-downloaded', () => {
-  mainWindow.webContents.send('update_downloaded');
 });
 
 ipcMain.on('restart_app', () => {
