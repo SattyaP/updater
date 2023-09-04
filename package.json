@@ -1,7 +1,7 @@
 {
   "name": "index",
   "productName": "test",
-  "version": "6.2.0",
+  "version": "6.4.0",
   "description": "test",
   "main": "index.js",
   "scripts": {
