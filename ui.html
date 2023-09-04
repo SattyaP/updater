@@ -11,26 +11,14 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        #notification {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 200px;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: white;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
+    <div id="check-update" class="overlay hidden">
+        <div id="checkUpdt">
+            <span>Checking for update....</span>
+        </div>
+    </div>
     <div id="warp" class="overlay hidden">
         <div id="notification">
             <p id="message"></p>

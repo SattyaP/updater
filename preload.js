@@ -5,6 +5,7 @@ const version = document.getElementById('version');
 const warp = document.getElementById('warp');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
+document.getElementById("move").style.webkitAppRegion = 'drag'
 
 document.getElementById('start').addEventListener('click', () => {
     const a = document.getElementById('headless');
@@ -38,9 +39,13 @@ ipcRenderer.on('app_version', (event, arg) => {
     version.innerText = 'Version ' + arg.version;
 });
 
+ipcRenderer.on("checking-for-update", () => {
+    document.getElementById("check-update").classList.remove("hidden")
+})
+
 ipcRenderer.on('update_available', () => {
     ipcRenderer.removeAllListeners('update_available');
-    document.getElementById("main").disabled = true
+    document.getElementById("check-update").classList.add("hidden")
     message.innerText = 'A new update is available. Downloading now...';
     warp.classList.remove('hidden');
     document.getElementById('download-progress').classList.remove('hidden');
@@ -53,7 +58,6 @@ ipcRenderer.on('update_progress', (event, progress) => {
 
 ipcRenderer.on('update_downloaded', () => {
     ipcRenderer.removeAllListeners('update_downloaded');
-    document.getElementById("main").disabled = false
     message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
     restartButton.classList.remove('hidden');
     warp.classList.remove('hidden');
