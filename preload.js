@@ -5,7 +5,6 @@ const version = document.getElementById('version');
 const warp = document.getElementById('warp');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
-const closeBtn = document.getElementById("close-button")
 
 document.getElementById('start').addEventListener('click', () => {
     const a = document.getElementById('headless');
@@ -61,12 +60,6 @@ ipcRenderer.on('update_downloaded', () => {
 
     document.getElementById('download-progress').classList.add('hidden');
 });
-
-closeBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-    document.getElementById("warp").classList.remove("overlay")
-    warp.classList.add('hidden');
-})
 
 restartButton.addEventListener("click", (e) => {
     ipcRenderer.send('restart_app');
