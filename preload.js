@@ -2,7 +2,7 @@ const {
     ipcRenderer
 } = require('electron');
 const version = document.getElementById('version');
-const notification = document.getElementById('notification');
+const warp = document.getElementById('warp');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
 const closeBtn = document.getElementById("close-button")
@@ -43,7 +43,7 @@ ipcRenderer.on('update_available', () => {
     ipcRenderer.removeAllListeners('update_available');
     document.getElementById("main").disabled = true
     message.innerText = 'A new update is available. Downloading now...';
-    notification.classList.remove('hidden');
+    warp.classList.remove('hidden');
     document.getElementById('download-progress').classList.remove('hidden');
 });
 
@@ -57,7 +57,7 @@ ipcRenderer.on('update_downloaded', () => {
     document.getElementById("main").disabled = false
     message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
     restartButton.classList.remove('hidden');
-    notification.classList.remove('hidden');
+    warp.classList.remove('hidden');
 
     document.getElementById('download-progress').classList.add('hidden');
 });
@@ -65,7 +65,7 @@ ipcRenderer.on('update_downloaded', () => {
 closeBtn.addEventListener("click", (e) => {
     e.preventDefault()
     document.getElementById("warp").classList.remove("overlay")
-    notification.classList.add('hidden');
+    warp.classList.add('hidden');
 })
 
 restartButton.addEventListener("click", (e) => {
