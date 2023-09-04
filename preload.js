@@ -40,8 +40,6 @@ ipcRenderer.on('app_version', (event, arg) => {
 
 ipcRenderer.on('update_available', () => {
     ipcRenderer.removeAllListeners('update_available');
-    document.getElementById("check-update").classList.remove("hidden");
-    
     message.innerText = 'A new update is available. Downloading now...';
     warp.classList.remove('hidden');
     document.getElementById('download-progress').classList.remove('hidden');
