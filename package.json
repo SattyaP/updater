@@ -1,7 +1,7 @@
 {
   "name": "index",
   "productName": "test",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "test",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
     "build": "npx electron-builder build  -p never",
-    "deploy": "electron-builder build -p always",
+    "deploy": "electron-builder -p always",
     "start-electron": "npm run build-electron && npm run start"
   },
   "author": "Alsav System",
@@ -56,10 +56,6 @@
       "target": "dmg"
     },
     "win": {
-      "publisherName": "SattyaP",
-      "publish": [
-        "github"
-      ],
       "target": [
         "nsis"
       ]
