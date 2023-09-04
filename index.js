@@ -4,16 +4,19 @@ const {
   ipcMain,
   Menu
 } = require('electron');
-const { autoUpdater } = require('electron-updater');
 const {
-  startProccess, stopProccess 
+  autoUpdater
+} = require('electron-updater');
+const {
+  startProccess,
+  stopProccess
 } = require('./bot');
 
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 420, 
+    width: 420,
     height: 430,
     x: 960,
     y: 300,
@@ -29,12 +32,18 @@ function createWindow() {
   });
   // Menu.setApplicationMenu(null)
   mainWindow.loadFile('ui.html');
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-  });
 
   autoUpdater.on('download-progress', (progress) => {
     mainWindow.webContents.send('update_progress', progress.percent);
+  });
+
+  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.on('update-available', () => {
+    mainWindow.webContents.send('update_available');
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    mainWindow.webContents.send('update_downloaded');
   });
 }
 
@@ -82,9 +91,11 @@ ipcMain.on('stop', (event) => {
     event.sender.send('log', logs.join('\n'));
   };
 
-  stopProccess(logToTextarea); 
+  stopProccess(logToTextarea);
 });
 
 ipcMain.on('app_version', (event) => {
-  event.sender.send('app_version', { version: app.getVersion() });
+  event.sender.send('app_version', {
+    version: app.getVersion()
+  });
 });
