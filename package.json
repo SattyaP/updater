@@ -10,8 +10,8 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
-    "build": "npx electron-builder build --win --publish never",
-    "deploy": "electron-builder build --win --publish always",
+    "build": "npx electron-builder build  -p never",
+    "deploy": "electron-builder build -p always",
     "start-electron": "npm run build-electron && npm run start"
   },
   "author": "Alsav System",

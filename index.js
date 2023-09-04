@@ -29,28 +29,12 @@ function createWindow() {
   });
   // Menu.setApplicationMenu(null)
   mainWindow.loadFile('ui.html');
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
 }
 
-app.on('ready', () => {
-  createWindow()
-  autoUpdater.checkForUpdatesAndNotify()
-})
-
-autoUpdater.on("update-available", () => {
-  console.log('update available');
-})
-
-autoUpdater.on("checking-for-update", () => {
-  console.log('checking for update');
-})
-
-autoUpdater.on("download-progress", () => {
-  console.log('download proggress');
-})
-
-autoUpdater.on("update-downloaded", () => {
-  console.log("update downloaded");
-})
+app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -62,6 +46,18 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
 });
 
 ipcMain.on('start', async (event, headless) => {
@@ -84,4 +80,8 @@ ipcMain.on('stop', (event) => {
   };
 
   stopProccess(logToTextarea); 
+});
+
+ipcMain.on('app_version', (event) => {
+  event.sender.send('app_version', { version: app.getVersion() });
 });

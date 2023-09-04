@@ -1,6 +1,11 @@
 const {
     ipcRenderer
 } = require('electron');
+const version = document.getElementById('version');
+const notification = document.getElementById('notification');
+const message = document.getElementById('message');
+const restartButton = document.getElementById('restart-button');
+const closeBtn = document.getElementById("close-button")
 
 document.getElementById('start').addEventListener('click', () => {
     const a = document.getElementById('headless');
@@ -25,3 +30,30 @@ ipcRenderer.on('log', (event, logs) => {
     logTextarea.value = logs;
     logTextarea.scrollTop = logTextarea.scrollHeight;
 });
+
+ipcRenderer.send('app_version');
+ipcRenderer.on('app_version', (event, arg) => {
+    ipcRenderer.removeAllListeners('app_version');
+    version.innerText = 'Version ' + arg.version;
+});
+
+ipcRenderer.on('update_available', () => {
+    ipcRenderer.removeAllListeners('update_available');
+    message.innerText = 'A new update is available. Downloading now...';
+    notification.classList.remove('hidden');
+});
+ipcRenderer.on('update_downloaded', () => {
+    ipcRenderer.removeAllListeners('update_downloaded');
+    message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+    restartButton.classList.remove('hidden');
+    notification.classList.remove('hidden');
+});
+
+closeBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    notification.classList.add('hidden');
+})
+
+restartButton.addEventListener("click", (e) => {
+    ipcRenderer.send('restart_app');
+})
