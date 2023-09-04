@@ -1,0 +1,77 @@
+{
+  "name": "index",
+  "productName": "test",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\"",
+    "build": "npx electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always",
+    "start-electron": "npm run build-electron && npm run start"
+  },
+  "author": "Alsav System",
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^6.1.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "puppeteer": "^21.0.2",
+    "puppeteer-extra": "^3.3.6",
+    "unzipper": "^0.10.14"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.3.0",
+    "@electron-forge/maker-deb": "^6.3.0",
+    "@electron-forge/maker-rpm": "^6.3.0",
+    "@electron-forge/maker-squirrel": "^6.3.0",
+    "@electron-forge/maker-zip": "^6.3.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.3.0",
+    "electron": "25.4.0",
+    "electron-builder": "^24.6.3"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/SattyaP/updater.git"
+  },
+  "build": {
+    "appId": "test",
+    "productName": "test",
+    "compression": "maximum",
+    "copyright": "Copyright © 2023 tester system",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "SattyaP",
+        "repo": "updater"
+      }
+    ],
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "publisherName": "SattyaP",
+      "publish": [
+        "github"
+      ],
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "extraFiles": [
+      "extension/spoof"
+    ]
+  }
+}
