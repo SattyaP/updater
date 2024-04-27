@@ -18,12 +18,12 @@ let updateCheckInProgress = false;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 420,
-    height: 430,
+    height: 450,
     x: 960,
-    y: 300,
+    y: 280,
     titleBarStyle: 'hidden',
     titleBarOverlay: {
-      color: '#ffff',
+      color: '#fff',
       symbolColor: '#3b71ca'
     },
     webPreferences: {
@@ -33,7 +33,7 @@ function createWindow() {
   });
   // Menu.setApplicationMenu(null)
   mainWindow.loadFile('ui.html');
-  
+
   autoUpdater.on('download-progress', (progress) => {
     mainWindow.webContents.send('update_progress', progress.percent);
   });
@@ -69,13 +69,21 @@ ipcMain.on('restart_app', () => {
 
 ipcMain.on('start', async (event, headless) => {
   const logs = [];
+  const prog = []
 
   const logToTextarea = (message) => {
     logs.push(message);
     event.sender.send('log', logs.join('\n'));
   };
 
-  await startProccess(logToTextarea, headless).catch((error) => logToTextarea(error));
+  const proggress = (pros) => {
+    prog.push(pros)
+    event.sender.send('proggress', prog);
+  };
+  event.sender.send("mulai")
+  await startProccess(logToTextarea, proggress, headless).catch((error) => logToTextarea(error));
+  event.sender.send("mari")
+  logToTextarea("Mari lur")
 });
 
 ipcMain.on('stop', (event) => {
@@ -86,6 +94,7 @@ ipcMain.on('stop', (event) => {
     event.sender.send('log', logs.join('\n'));
   };
 
+  event.sender.send("mari")
   stopProccess(logToTextarea);
 });
 

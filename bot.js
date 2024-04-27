@@ -42,51 +42,55 @@ const runaAway = async (logToTextarea, headless) => {
 
     try {
         logToTextarea("Navigating")
-        await page.goto('https://whoer.net/', {
-            waitUntil: 'networkidle2',
-            timeout: 60000
-        })
+        // await page.goto('https://whoer.net/', {
+        //     waitUntil: 'networkidle2',
+        //     timeout: 60000
+        // })
 
-        await page.waitForSelector('[class="card__col card__col_value matched highlighted_red"]');
-        const zones = await page.$$('[class="card__col card__col_value matched highlighted_red"]');
+        // await page.waitForSelector('[class="card__col card__col_value matched highlighted_red"]');
+        // const zones = await page.$$('[class="card__col card__col_value matched highlighted_red"]');
 
-        if (zones.length > 0) {
-            const arrayZone = [zones[0], zones[1], zones[2]];
+        // if (zones.length > 0) {
+        //     const arrayZone = [zones[0], zones[1], zones[2]];
 
-            const zone = await page.evaluate(e => e.textContent, arrayZone[0]);
-            const lokal = await page.evaluate(e => e.textContent, arrayZone[1]);
-            const system = await page.evaluate(e => e.textContent, arrayZone[2]);
+        //     const zone = await page.evaluate(e => e.textContent, arrayZone[0]);
+        //     const lokal = await page.evaluate(e => e.textContent, arrayZone[1]);
+        //     const system = await page.evaluate(e => e.textContent, arrayZone[2]);
 
-            const filterEmptyLines = (text) => {
-                return text
-                    .split('\n')
-                    .filter(line => line.trim() !== '')
-                    .join('\n');
-            };
+        //     const filterEmptyLines = (text) => {
+        //         return text
+        //             .split('\n')
+        //             .filter(line => line.trim() !== '')
+        //             .join('\n');
+        //     };
 
-            const filteredZone = filterEmptyLines(zone);
-            const filteredLokal = filterEmptyLines(lokal);
-            const filteredSystem = filterEmptyLines(system);
+        //     const filteredZone = filterEmptyLines(zone);
+        //     const filteredLokal = filterEmptyLines(lokal);
+        //     const filteredSystem = filterEmptyLines(system);
 
-            logToTextarea("Zone : " + filteredZone);
-            logToTextarea("Local : " + filteredLokal);
-            logToTextarea("System : " + filteredSystem + '\n');
-        }
+        //     logToTextarea("Zone : " + filteredZone);
+        //     logToTextarea("Local : " + filteredLokal);
+        //     logToTextarea("System : " + filteredSystem + '\n');
+        // }
 
-        await page.waitForTimeout(1000)
+        // await page.waitForTimeout(1000)
         await browser.close()
     } catch (error) {
         logToTextarea(error)
     }
 }
 
-const startProccess = async (logToTextarea, headless) => {
-    for (let i = 0; i < 5; i++) {
+const startProccess = async (logToTextarea, proggress, headless) => {
+    let loop = 100
+    for (let i = 0; i < loop; i++) {
         try {
             stopFlag = false;
+            const progress = parseInt(((i + 1) / loop) * 100);
+
+            proggress(progress)
+
             logToTextarea("Anu : " + i)
             await runaAway(logToTextarea, headless)
-
         } catch (error) {
             logToTextarea(error)
         } finally {

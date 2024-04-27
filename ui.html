@@ -18,7 +18,7 @@
         <div id="notification">
             <p id="message"></p>
             <progress id="download-progress" class="progress hidden mb-3" value="0" max="100"></progress>
-            <button class="btn btn-primary" id="restart-button" onClick="restartApp()" class="hidden">
+            <button class="btn btn-primary" id="restart-button" class="hidden">
                 Restart
             </button>
         </div>
@@ -35,9 +35,14 @@
                     <label class="form-check-label" for="headless">Visible Mode</label>
                 </div>
             </div>
-            <textarea class="form-control px-4" readonly name="" id="log" cols="30" rows="10"></textarea>
+            <div class="progress mb-3">
+                <div id="prog" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <textarea class="form-control px-4 mb-3" readonly name="" id="log" cols="30" rows="10"></textarea>
         </div>
-    
+
         <center role="button" id="move" class="mt-4">
             <i role="button" class="text-primary fa-solid fa-arrows-up-down-left-right fa-xl"></i>
         </center>

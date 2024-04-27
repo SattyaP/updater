@@ -1,7 +1,7 @@
 {
   "name": "index",
   "productName": "test",
-  "version": "6.11.0",
+  "version": "6.12.0",
   "description": "test",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
-    "build": "npx electron-builder build  -p never",
+    "build": "npx electron-builder build",
     "deploy": "electron-builder -p always",
     "start-electron": "npm run build-electron && npm run start"
   },
@@ -24,6 +24,7 @@
     "path": "^0.12.7",
     "puppeteer": "^21.0.2",
     "puppeteer-extra": "^3.3.6",
+    "selenium-webdriver": "^4.12.0",
     "unzipper": "^0.10.14"
   },
   "devDependencies": {
@@ -37,8 +38,8 @@
     "electron-builder": "^24.6.3"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/SattyaP/updater.git"
+    "type": "git",
+    "url": "https://github.com/SattyaP/updater.git"
   },
   "build": {
     "appId": "test",
@@ -68,6 +69,10 @@
     },
     "extraFiles": [
       "extension/spoof"
+    ], 
+    "files" : [
+      "!chrome",
+      "!chromes"
     ]
   }
 }
